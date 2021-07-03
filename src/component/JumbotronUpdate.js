@@ -14,10 +14,10 @@ class JumbotronUpdate extends Component{
                 <label for="text" className="form-label" style={{color:'white'}}>Desc</label>
                 <textarea type="text" className="form-control input-lg" rows="5" id="desc" aria-describedby="password"/>
                 <select class="form-select" aria-label="Default select example" style={{marginTop:'10px'}}>
-                    <option selected>Choose Product</option>
-                    <option value="1">Pinang</option>
+                    <button>Upload Lampiran</button>
+                    {/* <option value="1">Pinang</option>
                     <option value="2">Ceria</option>
-                    <option value="3">BRIAPI</option>
+                    <option value="3">BRIAPI</option> */}
                 </select>
                 <div>
                   <button type="button" className="btn btn-primary" style={{marginTop:'10px',backgroundColor:'white',color:'#004f97'}}>Submit</button>

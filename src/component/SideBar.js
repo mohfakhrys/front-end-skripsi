@@ -11,9 +11,15 @@ class SideBar extends Component{
                 <Link to='/Dashboard'>
                     <div style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Dashboard</div>
                 </Link>
-                <div href="#services" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket</div>
-                <div href="#clients" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Change Request</div>
-                <div href="#contact" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket New</div>
+                <Link to='/Tiket'>
+                    <div href="#services" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket New</div>
+                </Link>
+                <Link to='/TiketDone'>
+                    <div href="#contact" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket Done</div>
+                </Link>
+                <Link to='/Dashboard'>
+                    <div href="#clients" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Change Request</div>
+                </Link>
             </div>
             
         )
