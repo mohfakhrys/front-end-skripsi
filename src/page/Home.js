@@ -2,19 +2,17 @@ import React,{Component} from 'react'
 import Navbar from '../component/Navbar'
 import Card from '../component/Card'
 import Gridimage from '../component/Gridimage'
-import JumbotronHero from '../component/JumbotronHero'
-import JumbotronTurney from '../component/JumbotronTurney'
 import Footer from '../component/Footer'
 
 class Home extends Component{
     render(){
         return(
-            <div className="bg-dark">
+            <div className="container-lg" >
                 <Navbar/>
-                <Gridimage/>
                 <Card/>
-                <JumbotronHero/>
-                <JumbotronTurney/>
+                {/* <Gridimage/> */}
+                {/* <JumbotronHero/> */}
+                {/* <JumbotronTurney/> */}
                 <Footer/>
             </div>
         );
