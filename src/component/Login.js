@@ -96,7 +96,6 @@ class Card extends Component{
     this.setState({ isLoading: true });
 
     const { data, status, statusText } = await SignInData(values.username, values.password)
-    console.log(data)
 
     let setOpenSnackbarLogin = false
 
