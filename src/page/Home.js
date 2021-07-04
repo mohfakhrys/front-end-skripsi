@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import Navbar from '../component/Navbar'
-import Card from '../component/Card'
+import Login from '../component/Login'
 import Gridimage from '../component/Gridimage'
 import Footer from '../component/Footer'
 
@@ -9,7 +9,7 @@ class Home extends Component{
         return(
             <div className="container-lg" >
                 <Navbar/>
-                <Card/>
+                <Login/>
                 {/* <Gridimage/> */}
                 {/* <JumbotronHero/> */}
                 {/* <JumbotronTurney/> */}
