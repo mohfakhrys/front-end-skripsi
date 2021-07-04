@@ -90,13 +90,13 @@ class Card extends Component{
   handleSignIn = async (event) => {
     event.preventDefault();
     
-
     const { history } = this.props;
     const { values } = this.state
 
     this.setState({ isLoading: true });
 
     const { data, status, statusText } = await SignInData(values.username, values.password)
+    console.log(data)
 
     let setOpenSnackbarLogin = false
 
@@ -113,19 +113,19 @@ class Card extends Component{
     } else {
       setOpenSnackbarLogin = true
       
-      const { access_token, refresh_token } = data.data.credentials
+      const { credentials } = data
 
-      if(access_token && refresh_token ) {
-        const decoded = jwt.decode(access_token);
-        const roles = decoded.resource_access && decoded.resource_access['portal-web'] && decoded.resource_access['portal-web'].roles ? decoded.resource_access['portal-web'].roles : []
-        const { preferred_username, name } = decoded
+      if(credentials && credentials ) {
+        const decoded = jwt.decode(credentials);
+        // const roles = decoded.resource_access && decoded.resource_access['portal-web'] && decoded.resource_access['portal-web'].roles ? decoded.resource_access['portal-web'].roles : []
+        const { payload } = decoded
 
-        await asyncLocalStorage.setItem('accessToken', access_token)
-        await asyncLocalStorage.setItem('refreshToken', refresh_token)
-        await asyncLocalStorage.setItem('userData', decoded)
-        await asyncLocalStorage.setItem('roles', roles)
-        if(name) await asyncLocalStorage.setItem('name', name)
-        if(preferred_username) await asyncLocalStorage.setItem('username', preferred_username)
+        // await asyncLocalStorage.setItem('accessToken', access_token)
+        // await asyncLocalStorage.setItem('refreshToken', refresh_token)
+        // await asyncLocalStorage.setItem('userData', decoded)
+        // await asyncLocalStorage.setItem('roles', roles)
+        if(payload) await asyncLocalStorage.setItem('name', payload)
+        // if(preferred_username) await asyncLocalStorage.setItem('username', preferred_username)
 
         snackBarMessage = 'Login success!'
         history.push('/dashboard')

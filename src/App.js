@@ -11,24 +11,24 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './redux/reducers';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import axios from 'axios';
+import {baseApiUrl} from './common/config';
+import { createBrowserHistory } from 'history';
+import Routes from './Routes';
+const browserHistory = createBrowserHistory();
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
+
+axios.defaults.baseURL = baseApiUrl
 
 
 function App() {
   return (
     <Provider store={createStoreWithMiddleware(reducers)}>
     <React.Fragment>
-          <Router>
-            <Route path='/' exact component={Home}></Route>
-            <Route path='/Update' exact component={Update}></Route>
-            <Route path='/News' exact component={News}></Route>
-            <Route path='/Hero' exact component={Hero}></Route>
-            <Route path='/Dashboard' exact component={Dashboard}></Route>
-            <Route path='/Tiket' exact component={Tiket}></Route>
-            <Route path='/TiketDone' exact component={TiketDone}></Route>
-          </Router>
+      <Router history={browserHistory}>
+          <Routes />
+        </Router>
       </React.Fragment>
     </Provider>
   );

@@ -1,1 +1,1 @@
-export const baseApiUrl = process.env.BASE_API_URL || 'http://172.18.98.80:8181'
+export const baseApiUrl = process.env.BASE_API_URL || 'http://localhost:8080'
