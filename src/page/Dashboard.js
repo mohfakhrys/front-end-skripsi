@@ -2,6 +2,7 @@ import React,{Component} from 'react'
 import Navbar from '../component/Navbar'
 import SideBar from '../component/SideBar'
 import Footer from '../component/Footer'
+import DashboardDetail from '../component/dashboard/dashboardDetail'
 
 class Hero extends Component{
     render(){
@@ -9,6 +10,7 @@ class Hero extends Component{
             <div className="bg-dark">
                 <Navbar/>
                  <SideBar/>
+                 <DashboardDetail/>
                 <Footer/>
             </div>
         )
