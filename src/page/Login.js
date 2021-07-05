@@ -1,13 +1,21 @@
 import React,{Component} from 'react'
+import Navbar from '../component/Navbar'
+import Footer from '../component/Footer'
+import Login from '../component/Login'
+import { createBrowserHistory } from 'history';
 
-class Login extends Component{
+const browserHistory = createBrowserHistory();
+
+class PageLogin extends Component{
     render(){
         return(
-            <div>
-
+            <div className="bg-dark">
+                <Navbar/>
+                 <Login />
+                <Footer/>
             </div>
         )
     }
 }
 
-export default Login
+export default PageLogin

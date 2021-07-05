@@ -1,7 +1,6 @@
 import React,{Component} from 'react'
 import Navbar from '../component/Navbar'
 import SideBar from '../component/SideBar'
-import Footer from '../component/Footer'
 import DashboardDetail from '../component/dashboard/dashboardDetail'
 
 class Hero extends Component{
@@ -11,7 +10,6 @@ class Hero extends Component{
                 <Navbar/>
                  <SideBar/>
                  <DashboardDetail/>
-                <Footer/>
             </div>
         )
     }

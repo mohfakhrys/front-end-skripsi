@@ -1,13 +1,11 @@
 import React,{Component} from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo_bri.png';
-import background from '../images/logo_ceria.png';
-import { withStyles, SnackbarContent } from '@material-ui/core';
+import Footer from '../component/Footer'
+import { SnackbarContent } from '@material-ui/core';
 
 import {
-  Grid,
   Button,
-  // IconButton,
   CircularProgress,
   TextField,
   Typography,
@@ -19,8 +17,6 @@ import validate from 'validate.js';
 import _ from 'underscore';
 import schema from '../component/schema';
 import jwt from 'jsonwebtoken';
-// import schema from './schema';
-// import { SignInData } from '../services/apps/pinang/login';
 import { SignInData } from '../services/apps/pinang/login';
 import { asyncLocalStorage } from '../helpers';
 
@@ -116,14 +112,18 @@ class Card extends Component{
 
       if(credentials && credentials ) {
         const decoded = jwt.decode(credentials);
+        
         // const roles = decoded.resource_access && decoded.resource_access['portal-web'] && decoded.resource_access['portal-web'].roles ? decoded.resource_access['portal-web'].roles : []
-        const { payload } = decoded
+        // const { payload } = decoded
 
         // await asyncLocalStorage.setItem('accessToken', access_token)
         // await asyncLocalStorage.setItem('refreshToken', refresh_token)
-        // await asyncLocalStorage.setItem('userData', decoded)
+        await asyncLocalStorage.setItem('nama', decoded.username)
+        await asyncLocalStorage.setItem('role', decoded.role)
         // await asyncLocalStorage.setItem('roles', roles)
-        if(payload) await asyncLocalStorage.setItem('name', payload)
+        // if(payload) await asyncLocalStorage.setItem('name', decoded.username)
+        // if(payload) await asyncLocalStorage.setItem('role', decoded.role)
+        // if(payload) await asyncLocalStorage.setItem('role', payload.role)
         // if(preferred_username) await asyncLocalStorage.setItem('username', preferred_username)
 
         snackBarMessage = 'Login success!'
@@ -160,16 +160,12 @@ class Card extends Component{
     const showPasswordError = touched.password && errors.password;
 
         return(
-          <div className="background" style={{height:'565px',width:'1280px' ,paddingTop:'110px',paddingBottom:'80px',backgroundColor:'white'}}>
+          <div className="background" style={{height:'100%',width:'100%' ,paddingTop:'110px',paddingBottom:'80px',backgroundColor:'white'}}>
             <div className="card" style={{width: '236px',height:'100%',margin:'0 auto',borderColor:'#004f97'}}>
               <img src={logo} className="card-img-top" alt="logo" style={{maxHeight:'100px',maxWidth:'100px',marginLeft:'65px'}}/>
             <div class="card-body" >
               <form>
               <div class="mb-2">
-                {/* <label for="Text" className="form-label" style={{color:'white'}} >Username</label>
-                <input type="Text" className="form-control" aria-describedby="username"/>
-                <label for="Password" className="form-label" style={{color:'white'}}>Password</label>
-                <input type="password" className="form-control" aria-describedby="password"/> */}
                 <TextField
                       className="form-label"
                       label="Username"
@@ -238,7 +234,7 @@ class Card extends Component{
                   )}
                 {/* </Link> */}
                 <Link to='Update'>
-                  <div style={{color:'blue',marginTop:'10px'}}>Request Ticket</div>
+                  <div style={{color:'blue',marginTop:'10px'}}>Tiket Complain</div>
                 </Link>
               </div>
               </form>
@@ -265,6 +261,7 @@ class Card extends Component{
                         </SnackbarContent>
                       </Snackbar>
             </div>
+            <Footer/>
           </div>
           </div>
         );

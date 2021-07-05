@@ -1,18 +1,18 @@
 import React,{Component} from 'react'
 import Navbar from '../component/Navbar'
 import SideBar from '../component/SideBar'
-import TiketDone from '../component/dashboard/ListTiketDone'
+import DashboardDetail from '../component/dashboard/changeRequest'
 
-class PageDone extends Component{
+class pageChange extends Component{
     render(){
         return(
             <div className="bg-dark">
                 <Navbar/>
                  <SideBar/>
-                 <TiketDone/>
+                 <DashboardDetail/>
             </div>
         )
     }
 }
 
-export default PageDone
+export default pageChange

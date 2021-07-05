@@ -14,11 +14,20 @@ class SideBar extends Component{
                 <Link to='/Tiket'>
                     <div href="#services" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket New</div>
                 </Link>
+                <Link to='/TiketInProgress'>
+                    <div href="#contact" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket In-Progress</div>
+                </Link>
+                <Link to='/TiketPending'>
+                    <div href="#contact" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket Pending</div>
+                </Link>
                 <Link to='/TiketDone'>
                     <div href="#contact" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket Done</div>
                 </Link>
-                <Link to='/Dashboard'>
+                <Link to='/Request'>
                     <div href="#clients" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Change Request</div>
+                </Link>
+                <Link to='/Tiket/CR'>
+                    <div href="#services" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket Change Request</div>
                 </Link>
             </div>
             

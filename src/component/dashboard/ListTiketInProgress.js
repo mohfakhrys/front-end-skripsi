@@ -2,11 +2,11 @@ import React,{Component} from 'react'
 
 import { Link } from 'react-router-dom';
 
-class Tiket extends Component{
+class TiketInProgress extends Component{
     render(){
         return(
             <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
-            <h3 style={{marginLeft:'180px'}}>Tiket New</h3>
+            <h3 style={{marginLeft:'180px'}}>Tiket In Progress</h3>
             <div className="card" style={{width: '1165px',height:'110%',marginTop:'10px',marginLeft:'180px',borderColor:'#004f97'}}>
             <table class="table table-hover">
                 <thead>
@@ -44,4 +44,4 @@ class Tiket extends Component{
     }
 }
 
-export default Tiket
+export default TiketInProgress

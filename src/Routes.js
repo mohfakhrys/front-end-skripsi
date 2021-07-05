@@ -7,7 +7,13 @@ import MainDashboard from './page/Dashboard';
 import SignIn from './component/Login';
 import TiketNew from './page/Tiket';
 import TiketDone from './page/TiketDone';
-
+import TiketPending from './page/TiketPending';
+import TiketInProgress from './page/TiketInProgress';
+import ChangeRequest from './page/changeRequest';
+import Detail from './page/Detail';
+import Update from './page/Update';
+import TiketChangeRequest from './page/TiketChangeRequest';
+import CRDetail from './page/ChangeRequestDetail';
 // Helpers
 // import { checkAllowedApps } from 'helpers'
 
@@ -23,14 +29,6 @@ export default class Routes extends Component {
           from="/"
           to="/login"
         />
-
-        {/* {
-          allowedApps && allowedApps.length === 1 && <Redirect
-            exact
-            from="/dashboard"
-            to={allowedApps[0]}
-          />
-        } */}
         
         <Route
           component={SignIn}
@@ -48,31 +46,46 @@ export default class Routes extends Component {
           path="/tiket"
         />
         <Route
+          component={TiketInProgress}
+          exact
+          path="/TiketInProgress"
+        />
+        <Route
+          component={TiketPending}
+          exact
+          path="/TiketPending"
+        />
+        <Route
           component={TiketDone}
           exact
           path="/TiketDone"
         />
-        {/* <Route
-          component={UnderDevelopment}
+        <Route
+          component={Detail}
           exact
-          path="/under-development"
+          path="/tiket/list"
         />
         <Route
-          component={SomethingWentWrong}
+          component={Update}
           exact
-          path="/something-went-wrong"
+          path="/Update"
         />
         <Route
-          component={NotFound}
+          component={ChangeRequest}
           exact
-          path="/not-found"
+          path="/Request"
         />
         <Route
-          component={NoPrivileges}
+          component={TiketChangeRequest}
           exact
-          path="/no-privileges"
-        /> */}
-        {/* <Redirect to="/not-found" /> */}
+          path="/Tiket/CR"
+        />
+        <Route
+          component={CRDetail}
+          exact
+          path="/Tiket/CR/Detail"
+        />
+       
       </Switch>
     );
   }

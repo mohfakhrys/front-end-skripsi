@@ -1,18 +1,18 @@
 import React,{Component} from 'react'
 import Navbar from '../component/Navbar'
 import SideBar from '../component/SideBar'
-import TiketDone from '../component/dashboard/ListTiketDone'
+import TiketChangeRequest from '../component/dashboard/ListChangeRequest'
 
-class PageDone extends Component{
+class TiketCR extends Component{
     render(){
         return(
             <div className="bg-dark">
                 <Navbar/>
                  <SideBar/>
-                 <TiketDone/>
+                 <TiketChangeRequest/>
             </div>
         )
     }
 }
 
-export default PageDone
+export default TiketCR

@@ -1,18 +1,18 @@
 import React,{Component} from 'react'
 import Navbar from '../component/Navbar'
 import SideBar from '../component/SideBar'
-import TiketDone from '../component/dashboard/ListTiketDone'
+import TiketPending from '../component/dashboard/ListTiketPending'
 
-class PageDone extends Component{
+class PagePending extends Component{
     render(){
         return(
             <div className="bg-dark">
                 <Navbar/>
                  <SideBar/>
-                 <TiketDone/>
+                 <TiketPending/>
             </div>
         )
     }
 }
 
-export default PageDone
+export default PagePending
