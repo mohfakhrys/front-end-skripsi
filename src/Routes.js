@@ -63,7 +63,7 @@ export default class Routes extends Component {
         <Route
           component={Detail}
           exact
-          path="/tiket/list"
+          path="/tiket/list/:id_tiket"
         />
         <Route
           component={Update}

@@ -1,7 +1,24 @@
-import React,{Component} from 'react'
+import React,{Component} from 'react';
+import axios from 'axios';
+
+import {
+    TableCell,
+    TableRow,
+    Typography
+  } from '@material-ui/core';
 
 class TiketDone extends Component{
+    state = {
+        tiket: []
+    }
+    componentDidMount() {
+        // Simple GET request using axios
+        axios.get('http://localhost:8000/done')
+            .then(response => this.setState({ tiket: response.data }));
+    }
+
     render(){
+        const { tiket } = this.state;
         return(
         <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
             <h3 style={{marginLeft:'180px'}}>Tiket Done</h3>
@@ -10,24 +27,46 @@ class TiketDone extends Component{
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
+                        <th scope="col">Username Nasabah</th>
                         <th scope="col">Pekerja Tiket</th>
-                        <th scope="col">Katagori</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Tanggal Komplain</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>asep</td>
-                      <td>gagal debet</td>
-                      <td>21-05-2021</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>riyan</td>
-                      <td>gagal pengajuan</td>
-                      <td>19-06-2021</td>
-                    </tr>
+                    {
+                        tiket.map(
+                            tiket => (
+                            <TableRow>
+                                <TableCell>
+                                        {/* <Link to={`/tiket/${tiket.id_tiket}`}> */}
+                                        {/* <Link to='/tiket/list'> */}
+                                          <Typography
+                                            variant="body1"
+                                          >
+                                            {tiket.id_tiket}
+                                          </Typography>
+                                        {/* </Link> */}
+                                  {/* </div> */}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.username}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.pekerja}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.status}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.tanggal_komplain}
+                                </TableCell>
+                              </TableRow>
+                            
+                            )
+                        )
+                    }
+                    
                 </tbody>
             </table>
             </div>

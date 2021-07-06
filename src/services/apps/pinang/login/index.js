@@ -1,7 +1,8 @@
 // Externals
 import axios from 'axios';
 import { handleErrorResponse } from '../../../../helpers'
-
+import {baseApiUrl} from '../../../../common/config';
+axios.defaults.baseURL = baseApiUrl
 /**
  * @description post sign in
  */

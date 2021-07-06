@@ -20,7 +20,7 @@ import jwt from 'jsonwebtoken';
 import { SignInData } from '../services/apps/pinang/login';
 import { asyncLocalStorage } from '../helpers';
 
-class Card extends Component{
+class Login extends Component{
   state = {
     values: {
       username: '',
@@ -268,4 +268,4 @@ class Card extends Component{
     }
 }
 
-export default Card
+export default Login

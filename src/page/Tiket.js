@@ -8,7 +8,7 @@ class TiketNew extends Component{
         return(
             <div className="bg-dark">
                 <Navbar/>
-                 <SideBar/>
+                 <SideBar />
                  <Tiket/>
             </div>
         )

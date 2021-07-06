@@ -1,9 +1,25 @@
 import React,{Component} from 'react'
 
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+import {
+    TableCell,
+    TableRow,
+    Typography
+  } from '@material-ui/core';
 
 class TiketPending extends Component{
+    state = {
+        tiket: []
+    }
+    componentDidMount() {
+        // Simple GET request using axios
+        axios.get('http://localhost:8000/pending')
+            .then(response => this.setState({ tiket: response.data }));
+    }
     render(){
+        const { tiket } = this.state;
         return(
             <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
             <h3 style={{marginLeft:'180px'}}>Tiket Pending</h3>
@@ -12,30 +28,46 @@ class TiketPending extends Component{
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
+                        <th scope="col">Username Nasabah</th>
                         <th scope="col">Pekerja Tiket</th>
-                        <th scope="col">Katagori</th>
                         <th scope="col">Status</th>
                         <th scope="col">Tanggal Komplain</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {
+                        tiket.map(
+                            tiket => (
+                            <TableRow>
+                                <TableCell>
+                                        {/* <Link to={`/tiket/${tiket.id_tiket}`}> */}
+                                        <Link to='/tiket/list'>
+                                          <Typography
+                                            variant="body1"
+                                          >
+                                            {tiket.id_tiket}
+                                          </Typography>
+                                        </Link>
+                                  {/* </div> */}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.username}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.pekerja}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.status}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.tanggal_komplain}
+                                </TableCell>
+                              </TableRow>
+                            
+                            )
+                        )
+                    }
                     
-                    <tr>
-                    <Link to='/tiket/list'>
-                      <th scope="row">1</th>
-                    </Link>  
-                      <td>fakhry</td>
-                      <td>New</td>
-                      <td>gagal debet</td>
-                      <td>20-06-2021</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>galih</td>
-                      
-                      <td>gagal pengajuan</td>
-                      <td>10-06-2021</td>
-                    </tr>
                 </tbody>
             </table>
             </div>
