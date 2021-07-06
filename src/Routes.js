@@ -14,6 +14,8 @@ import Detail from './page/Detail';
 import Update from './page/Update';
 import TiketChangeRequest from './page/TiketChangeRequest';
 import CRDetail from './page/ChangeRequestDetail';
+import ApproveCR from './page/changeRequestApprove';
+import RejectCR from './page/changeRequestReject';
 // Helpers
 // import { checkAllowedApps } from 'helpers'
 
@@ -29,7 +31,16 @@ export default class Routes extends Component {
           from="/"
           to="/login"
         />
-        
+        <Route
+          component={ApproveCR}
+          exact
+          path="/approve"
+        />
+        <Route
+        component={RejectCR}
+        exact
+        path="/reject"
+      />
         <Route
           component={SignIn}
           exact

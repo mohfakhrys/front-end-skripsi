@@ -29,6 +29,12 @@ class SideBar extends Component{
                 <Link to='/Tiket/CR'>
                     <div href="#services" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket Change Request</div>
                 </Link>
+                <Link to='/approve'>
+                    <div href="#services" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket Change Request Approve</div>
+                </Link>
+                <Link to='/reject'>
+                    <div href="#services" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket Change Request Reject</div>
+                </Link>
             </div>
             
         )

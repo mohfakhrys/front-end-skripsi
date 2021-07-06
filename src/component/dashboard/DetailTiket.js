@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+// import axios from 'axios';
+// import { useLocation } from 'react-router-dom';
 
 class DetailTiket extends Component{
     state = {
@@ -15,7 +15,7 @@ class DetailTiket extends Component{
     // }
     
     render(){
-        const { tiket } = this.state;
+        // const { tiket } = this.state;
         // let url = new URL('http://www.test.com/t.html?a=1&b=3&c=m2-m3-m4-m5');
         // let url = useLocation().search
         // let searchParams = new URLSearchParams(url);

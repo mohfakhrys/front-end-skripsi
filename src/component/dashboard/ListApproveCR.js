@@ -16,7 +16,7 @@ class ListCR extends Component{
     }
     componentDidMount() {
         // Simple GET request using axios
-        axios.get('http://localhost:8000/allCR')
+        axios.get('http://localhost:8000/approve')
             .then(response => this.setState({ tiket: response.data }));
     }
 
@@ -24,7 +24,7 @@ class ListCR extends Component{
         const { tiket } = this.state;
         return(
             <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
-            <h3 style={{marginLeft:'180px'}}>Tiket Change Request</h3>
+            <h3 style={{marginLeft:'180px'}}>Tiket Change Request Approve</h3>
             <div className="card" style={{width: '1165px',height:'110%',marginTop:'10px',marginLeft:'180px',borderColor:'#004f97'}}>
             <table class="table table-hover">
                 <thead>
