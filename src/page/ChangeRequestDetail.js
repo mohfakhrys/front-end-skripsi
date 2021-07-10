@@ -3,7 +3,7 @@ import Navbar from '../component/Navbar'
 import SideBar from '../component/SideBar'
 import DetailTiket from '../component/dashboard/ChangeReqeustDetail'
 
-class DerailCR extends Component{
+class DetailCR extends Component{
     render(){
         return(
             <div className="bg-dark">
@@ -15,4 +15,4 @@ class DerailCR extends Component{
     }
 }
 
-export default DerailCR
+export default DetailCR

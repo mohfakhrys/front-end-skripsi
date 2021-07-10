@@ -28,9 +28,11 @@ class TiketPending extends Component{
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Username Nasabah</th>
+                        <th scope="col">Nama Nasabah</th>
                         <th scope="col">Pekerja Tiket</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Katagori</th>
+                        <th scope="col">Komplain</th>
                         <th scope="col">Tanggal Komplain</th>
                     </tr>
                 </thead>
@@ -40,8 +42,8 @@ class TiketPending extends Component{
                             tiket => (
                             <TableRow>
                                 <TableCell>
-                                        {/* <Link to={`/tiket/${tiket.id_tiket}`}> */}
-                                        <Link to='/tiket/list'>
+                                        <Link to={`/tiket/list/id_tiket=${tiket.id_tiket}`}>
+                                        {/* <Link to='/tiket/list'> */}
                                           <Typography
                                             variant="body1"
                                           >
@@ -51,13 +53,19 @@ class TiketPending extends Component{
                                   {/* </div> */}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.username}
+                                  {tiket.user_name}
                                 </TableCell>
                                 <TableCell >
                                   {tiket.pekerja}
                                 </TableCell>
                                 <TableCell >
                                   {tiket.status}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.katagori}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.komplain}
                                 </TableCell>
                                 <TableCell >
                                   {tiket.tanggal_komplain}

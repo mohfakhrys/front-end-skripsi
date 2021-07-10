@@ -17,43 +17,72 @@ import validate from 'validate.js';
 import _ from 'underscore';
 import schema from '../component/schema';
 import jwt from 'jsonwebtoken';
-import { SignInData } from '../services/apps/pinang/login';
+import { SignUpData } from '../services/apps/pinang/signUp';
 import { asyncLocalStorage } from '../helpers';
 
-class Login extends Component{
-  state = {
-    values: {
-      username: '',
-      password: ''
+const options = [
+    {
+        label: "Pilih Role",
+        value: "Pilih Role",
+      },
+    {
+      label: "tim helpdesk",
+      value: "tim helpdesk",
     },
-    touched: {
-      username: false,
-      password: false
+    {
+      label: "tim operasional",
+      value: "tim operasional",
     },
-    errors: {
-      username: null,
-      password: null
+    {
+      label: "management",
+      value: "management",
     },
-    isValid: false,
-    isLoading: false,
-    submitError: null,
-    showPassword: false,
-    setOpenSnackbarLogin: false,
-    snackBarMessage: '',
-  };
+    {
+        label: "nasabah",
+        value: "nasabah",
+      }
+  ];
+
+class Register extends Component{
+  constructor(props){
+      super(props)
+      this.state = {
+        values: {
+            username: '',
+            password: '',
+            rekening: '',
+            email: '',
+            fullname:'',
+            userRole: ''
+          },
+          touched: {
+            username: false,
+            password: false,
+            rekening: false,
+            email: false,
+            fullname: false
+          },
+          errors: {
+            username: null,
+            password: null,
+            rekening: null,
+            email: null,
+            fullname: null
+          },
+          isValid: false,
+          isLoading: false,
+          submitError: null,
+          showPassword: false,
+          setOpenSnackbarLogin: false,
+          snackBarMessage: '',
+      }
+  }
+
 
   componentDidMount(){
     if (localStorage.getItem('accessToken')) this.props.history.push('/dashboard')
   }
 
-  handleShowPassword = () => {
-
-    const { values, showPassword } = this.state
-
-    this.setState({
-      ...values, showPassword: !showPassword
-    })
-  }
 
   handleBack = () => {
     const { history } = this.props;
@@ -91,7 +120,8 @@ class Login extends Component{
 
     this.setState({ isLoading: true });
 
-    const { data, status, statusText } = await SignInData(values.username, values.password)
+    console.log(this.state.values.userRole)
+    const { data, status, statusText } = await SignUpData(values.username, values.rekening, values.fullname , values.email, values.password, values.userRole)
 
     let setOpenSnackbarLogin = false
 
@@ -104,6 +134,11 @@ class Login extends Component{
 
       values.username = ''
       values.password = ''
+      values.email = ''
+      values.fullname = ''
+      values.rekening = ''
+      values.userRole = ''
+
       this.setState({isValid: false})
     } else {
       setOpenSnackbarLogin = true
@@ -127,12 +162,7 @@ class Login extends Component{
         // if(preferred_username) await asyncLocalStorage.setItem('username', preferred_username)
 
         snackBarMessage = 'Login success!'
-        if (decoded.role === 'nasabah') {
-          history.push('/update')
-        } else {
-          history.push('/Tiket')
-        }
-       console.log(decoded.role)
+        history.push('/dashboard')
       } else {
         snackBarMessage = 'Invalid token. Please try again'
       } 
@@ -149,6 +179,12 @@ class Login extends Component{
   handleCloseSnackBar() {
     this.setState({setOpenSnackbarLogin: false});
   }
+
+  handleChangeRole(event){
+    //   const  =this.state.values.userRole
+      this.setState({userRole: event.taget.value });
+      console.log(this.state.values.userRole)
+  }
    
   render(){
     const {
@@ -160,17 +196,26 @@ class Login extends Component{
       isLoading,
       showPassword,
     } = this.state;
+    console.log(values.userRole)
 
     const showEmailError = touched.username && errors.username;
     const showPasswordError = touched.password && errors.password;
-
+    
         return(
-          <div className="background" style={{height:'100%',width:'100%' ,paddingTop:'110px',paddingBottom:'80px',backgroundColor:'white'}}>
+          <div className="background" style={{height:'100%',width:'100%' ,paddingTop:'30px',paddingBottom:'80px',backgroundColor:'white'}}>
             <div className="card" style={{width: '236px',height:'100%',margin:'0 auto',borderColor:'#004f97'}}>
               <img src={logo} className="card-img-top" alt="logo" style={{maxHeight:'100px',maxWidth:'100px',marginLeft:'65px'}}/>
             <div class="card-body" >
               <form>
               <div class="mb-2">
+              <select class="form-select"  value={values.userRole} onChange={event =>
+                        this.handleFieldChange('userRole', event.target.value)
+                      } aria-label="Default select example" style={{marginBottom:'10px'}}>
+                  {options.map((option)=>(
+                      <option value={option.value}>{option.label}</option>
+                  ))
+                  }
+                </select>
                 <TextField
                       className="form-label"
                       label="Username"
@@ -193,9 +238,45 @@ class Login extends Component{
                     )}
                     <TextField
                       className="form-label"
+                      label="Full Name"
+                      name="fullname"
+                      style={{backgroundColor:'white',marginTop:'10px'}}
+                      onChange={event =>
+                        this.handleFieldChange('fullname', event.target.value)
+                      }
+                      type="text"
+                      value={values.fullname}
+                      variant="outlined"
+                    />
+                <TextField
+                      className="form-label"
+                      label="Rekening"
+                      name="rekening"
+                      style={{backgroundColor:'white',marginTop:'10px'}}
+                      onChange={event =>
+                        this.handleFieldChange('rekening', event.target.value)
+                      }
+                      type="number"
+                      value={values.rekening}
+                      variant="outlined"
+                    />
+                    <TextField
+                      className="form-label"
+                      label="Email"
+                      name="email"
+                      style={{backgroundColor:'white',marginTop:'10px'}}
+                      onChange={event =>
+                        this.handleFieldChange('email', event.target.value)
+                      }
+                      type="email"
+                      value={values.email}
+                      variant="outlined"
+                    />
+                    <TextField
+                      className="form-label"
                       label="Password"
                       name="password"
-                      style={{marginTop:'20px'}}
+                      style={{marginTop:'10px'}}
                       onChange={event =>
                         this.handleFieldChange('password', event.target.value)
                       }
@@ -234,12 +315,12 @@ class Login extends Component{
                       size="large"
                       variant="contained"
                     >
-                      Login
+                      Submit
                     </Button>
                   )}
                 {/* </Link> */}
-                <Link to='register'>
-                  <div style={{color:'blue',marginTop:'10px'}}>Register</div>
+                <Link to='Login'>
+                  <div style={{color:'blue',marginTop:'10px'}}>Login</div>
                 </Link>
               </div>
               </form>
@@ -273,4 +354,4 @@ class Login extends Component{
     }
 }
 
-export default Login
+export default Register

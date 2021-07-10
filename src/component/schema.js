@@ -8,16 +8,16 @@ export default {
       presence: { allowEmpty: false, message: 'is required' },
       length: {
         maximum: 45,
-        minimum: 5,
-        message: "minimal 5 karakter"
+        minimum: 6,
+        message: "minimal 6 karakter"
       },
     },
     password: {
       presence: { allowEmpty: false, message: 'is required' },
       length: {
         maximum: 30,
-        minimum: 5,
-        message: "minimal 5 karakter"
+        minimum: 6,
+        message: "minimal 6 karakter"
       }
     }
   };

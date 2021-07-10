@@ -16,6 +16,7 @@ import TiketChangeRequest from './page/TiketChangeRequest';
 import CRDetail from './page/ChangeRequestDetail';
 import ApproveCR from './page/changeRequestApprove';
 import RejectCR from './page/changeRequestReject';
+import Register from './component/Register'
 // Helpers
 // import { checkAllowedApps } from 'helpers'
 
@@ -30,6 +31,11 @@ export default class Routes extends Component {
           exact
           from="/"
           to="/login"
+        />
+        <Route
+          component={Register}
+          exact
+          path="/register"
         />
         <Route
           component={ApproveCR}
@@ -74,7 +80,7 @@ export default class Routes extends Component {
         <Route
           component={Detail}
           exact
-          path="/tiket/list/:id_tiket"
+          path="/tiket/list/id_tiket=:id_tiket"
         />
         <Route
           component={Update}

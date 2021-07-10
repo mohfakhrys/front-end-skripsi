@@ -41,7 +41,7 @@ class ListCR extends Component{
                             tiket => (
                             <TableRow>
                                 <TableCell>
-                                        <Link to={`/tiket/list/id_tiket=${tiket.id_tiket}`}>
+                                        <Link to={`/Tiket/CR/Detail`}>
                                         {/* <Link to='/tiket/list'> */}
                                           <Typography
                                             variant="body1"
