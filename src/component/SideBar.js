@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 
 class SideBar extends Component{
     render(){
+        
         return(
             <div class="sidenav" style={{height: '100%',width: '160px',position: 'fixed',zIndex: '1',top: '50px',left:'0',backgroundColor:'#004f97', overflowX:'hidden',paddingTop:'20px'}}>
-                <Link to='/nasabah'>
-                    <div style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Tambah Nasabah</div>
+               <Link to='/nasabah'>
+                    <div style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Tambah Data Nasabah</div>
                 </Link>
                 <Link to='/Tiket'>
                     <div href="#services" style={{ padding: '6px 8px 6px 16px',textDecoration: 'none',fontSize: '15px',color: 'white',display: 'block'}}>Ticket New</div>

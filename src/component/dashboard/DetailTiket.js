@@ -1,28 +1,15 @@
 import React,{Component} from 'react'
 import axios from 'axios';
 
-import jwt from 'jsonwebtoken';
 import { AssignData , updateStatus } from '../../services/apps/pinang/assign';
-import { asyncLocalStorage } from '../../helpers';
 
-const options = [
-    {
-        label: "Pilih Pekerja",
-        value: "Pilih Pekerja",
-      },
-    {
-      label: "Operasional 1",
-      value: "Operasional 1",
-    },
-    {
-      label: "Operasional 2",
-      value: "Operasional 2",
-    },
-    {
-      label: "Operasional 3",
-      value: "Operasional 3",
-    }
-  ];
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 
   const optionStatus = [
     {
@@ -30,8 +17,8 @@ const options = [
         value: "Pilih Status",
       },
     {
-      label: "New",
-      value: "New",
+      label: "NEW",
+      value: "NEW",
     },
     {
       label: "In Progress",
@@ -46,6 +33,7 @@ const options = [
         value: "Done",
       }
   ];
+
 class DetailTiket extends Component{
     constructor(props){
         super(props)
@@ -62,7 +50,8 @@ class DetailTiket extends Component{
             },
             submitError: null,
             deskripsi:'',
-            photos:[],
+            // photos:[],
+            pekerja:[],
             isOpen: false
         }
     }
@@ -73,15 +62,17 @@ class DetailTiket extends Component{
         axios.get(`http://localhost:8000/tiket/list/id_tiket=${id}`)
             .then(response => this.setState({ tiket: response.data }));
         
-        axios.get(`http://localhost:8080/ticket/image/${id}/thumbnail`)
-            .then(response => this.setState({ photos: response.data }));
-
-            console.log(this.state.photos)
+        axios.get(`http://localhost:8000/pekerja`)
+            .then(response => this.setState({ pekerja: response.data }));
+            console.log(this.state.pekerja)
+            
     }
 
     handleShowDialog = () => {
       this.setState({ isOpen: !this.state.isOpen });
-      console.log('cliked');
+    };
+    handleClose = () => {
+      this.setState({ isOpen: !this.state.isOpen });
     };
   
 
@@ -115,11 +106,6 @@ class DetailTiket extends Component{
       const { credentials } = data
 
       if(credentials && credentials ) {
-        const decoded = jwt.decode(credentials);
-        
-        await asyncLocalStorage.setItem('nama', decoded.username)
-        await asyncLocalStorage.setItem('role', decoded.role)
-        
 
         snackBarMessage = 'Login success!'
         history.push(`/tiket/list/id_tiket=${id}`)
@@ -165,10 +151,6 @@ class DetailTiket extends Component{
       const { credentials } = data
 
       if(credentials && credentials ) {
-        const decoded = jwt.decode(credentials);
-        
-        await asyncLocalStorage.setItem('nama', decoded.username)
-        await asyncLocalStorage.setItem('role', decoded.role)
         
 
         snackBarMessage = 'Login success!'
@@ -216,7 +198,10 @@ class DetailTiket extends Component{
       
 
     render(){
-        const { tiket,values } = this.state;
+        const { tiket,pekerja } = this.state;
+        this.handleClose = this.handleClose.bind(this);
+        const id = this.props.id
+        console.log(pekerja)
         const { role } = localStorage.getItem('role')
         let button;
             if (tiket.jawaban ===  null) {
@@ -237,16 +222,16 @@ class DetailTiket extends Component{
             if ( role === 'tim helpdesk' ){
               assign = 
               <div className ="assig-tiket"style={{marginTop:'5px'}}> 
-                <select class="form-select"  value={values.status} onChange={event =>
+                <select class="form-select"  value={pekerja.full_name} onChange={event =>
                         this.handleFieldChange('pekerja', event.target.value)
                       } aria-label="Default select example" style={{marginLeft:'5px'}}>
-                  {options.map((option)=>(
-                      <option value={option.value}>{option.label}</option>
+                  {pekerja.map((pekerja)=>(
+                      <option value={pekerja.full_name}>{pekerja.full_name}</option>
                   ))
                   }
                 </select>
                 <button style={{marginLeft:'5px'}} onClick={this.handleAssign}>Submit Pekerja</button>
-                <select class="form-select"  value={values.pekerja} onChange={event =>
+                <select class="form-select"  value={optionStatus.value} onChange={event =>
                         this.handleFieldChange('status', event.target.value)
                       } aria-label="Default select example" style={{marginLeft:'10px'}}>
                   {optionStatus.map((option)=>(
@@ -260,7 +245,7 @@ class DetailTiket extends Component{
             }else {
               assign = 
               <div className ="assig-tiket" style={{marginTop:'5px'}}> 
-                <select class="form-select"  value={values.pekerja} onChange={event =>
+                <select class="form-select"  value={optionStatus.value} onChange={event =>
                         this.handleFieldChange('status', event.target.value)
                       } aria-label="Default select example" style={{marginLeft:'5px'}}>
                   {optionStatus.map((option)=>(
@@ -275,28 +260,22 @@ class DetailTiket extends Component{
             <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
             <h3 style={{marginLeft:'180px'}}>Detail Tiket</h3>
             <div className="card" style={{width: '1165px',height:'120%',marginTop:'10px',marginLeft:'180px',borderColor:'#004f97'}}>
-                <div className ="id-tiket" style={{marginLeft:'5px',marginTop:'5px'}}>Tiket  {tiket.id_tiket} - {tiket.name} - {tiket.rekening} - {tiket.nomer_hp}
+                <div className ="id-tiket" style={{marginLeft:'5px',marginTop:'5px'}}>Tiket  {tiket.id_tiket} 
                     <button style={{marginLeft:'5px'}} onClick={this.handleShowDialog}>Lihat Lampiran</button>
-                    {this.state.isOpen && (
-                      <dialog
-                        className="dialog"
-                        style={{ position: 'right' }}
-                        open
-                        onClick={this.handleShowDialog}
-                      > 
-                      <img
-                        className="image"
-                        src="/Anj.png"
-                        onClick={this.handleShowDialog}
-                        alt="no image"
-                      />
-                      </dialog>
-                    )}
                 </div>
             {assign}
             <div className="card" style={{width: '100%',height:'40%',marginTop:'10px',borderColor:'#004f97'}}>
                 <div>
+                    Name      : {tiket.name}
+                  <div>
+                  Rekening  : {tiket.rekening}
+                  </div>
+                    <div>
+                    Nomer HP  : {tiket.nomer_hp} 
+                    </div>
+                    <div>
                     {tiket.komplain}
+                    </div>
                 </div>
             </div>
             <div className="card" style={{width: '100%',height:'50%',marginTop:'10px',borderColor:'#004f97'}}>
@@ -304,6 +283,22 @@ class DetailTiket extends Component{
             </div>
                 <button onClick={this.handleSubmit}>Submit Answer</button>
             </div>
+            {this.state.isOpen && (
+                      <Dialog
+                        className="dialog"
+                        style={{ position: 'absolute' }}
+                        open={this.state.isOpen}
+                        keepMounted
+                        TransitionComponent={Transition}
+                        onClose ={this.handleClose}
+                      > 
+                      <img
+                        className="gambar"
+                        src={`http://localhost:8080/ticket/image/${id}/thumbnail`}
+                        alt=""
+                      />
+                      </Dialog>
+                    )}
         </div>
         )
     }

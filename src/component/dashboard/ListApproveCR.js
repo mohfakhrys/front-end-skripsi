@@ -22,15 +22,17 @@ class ListCR extends Component{
 
     render(){
         const { tiket } = this.state;
+        console.log(tiket)
         return(
             <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
             <h3 style={{marginLeft:'180px'}}>Tiket Change Request Approve</h3>
             <div className="card" style={{width: '1165px',height:'110%',marginTop:'10px',marginLeft:'180px',borderColor:'#004f97'}}>
             <table class="table table-hover">
                 <thead>
-                    <tr>
+                <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Username Operasional</th>
+                        <th scope="col">Keterangan</th>
                         <th scope="col">Status</th>
                         <th scope="col">Tanggal Request</th>
                     </tr>
@@ -41,24 +43,27 @@ class ListCR extends Component{
                             tiket => (
                             <TableRow>
                                 <TableCell>
-                                        <Link to={`/tiket/list/id_tiket=${tiket.id_tiket}`}>
+                                        <Link to={`/change/id_change=${tiket.id_change}`}>
                                         {/* <Link to='/tiket/list'> */}
                                           <Typography
                                             variant="body1"
                                           >
-                                            {tiket.id_tiket_change_request}
+                                            {tiket.id_change}
                                           </Typography>
                                         </Link>
                                   {/* </div> */}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.user_operasional}
+                                  {tiket.user_name}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.status_change_request}
+                                  {tiket.keterangan}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.tanggal_request}
+                                  {tiket.status_change}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.created_at}
                                 </TableCell>
                               </TableRow>
                             

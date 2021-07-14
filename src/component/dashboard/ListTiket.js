@@ -23,6 +23,7 @@ class Tiket extends Component{
     render(){
         const { tiket } = this.state;
         console.log(tiket)
+        console.log(tiket)
         return(
             <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
             <h3 style={{marginLeft:'180px'}}>Tiket New</h3>

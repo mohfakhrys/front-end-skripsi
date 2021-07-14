@@ -1,45 +1,17 @@
+// Externals
 import axios from 'axios';
-
 //fungsi error request time out
-import { handleErrorResponse } from 'helpers'
+import { handleErrorResponse } from '../../../../helpers'
+// import {baseApiUrl2} from '../../../../common/config';
+// axios.defaults.baseURL = baseApiUrl2
 
 /**
- * @description Get all approval data
+ * @description post sign up
  */
-export const getAllApprovalExpiration = async (limit = 10, offset = 0, q, filters) => {
+export const  addNasabah = async (rekening, name,phoneNumber,alamat,KodeCabang) => {
   try {
-    const { data, status, statusText } = await axios.get('/pinang/application/expire', { headers: { Authorization: localStorage.getItem('accessToken') } ,  params: {limit, offset, q, ...filters }});
-    
-    return { data, status, statusText }
-  } catch (error) {
-    return handleErrorResponse(error)
-  }
-};
-
-export const requestToApproveExpiration = async ( dataToApprove ) => {
-  try {
-    const { data, status, statusText } = await axios.patch('/pinang/application/expire/approve', { data : dataToApprove }, { headers: { Authorization: localStorage.getItem('accessToken') } });
-    
-    return { data, status, statusText }
-  } catch (error) {
-    return handleErrorResponse(error)
-  }
-};
-
-export const requestToRejectExpiration = async ( dataToReject ) => {
-  try {
-    const { data, status, statusText } = await axios.patch('/pinang/application/expire/reject', { data : dataToReject }, { headers: { Authorization: localStorage.getItem('accessToken') } });
-    
-    return { data, status, statusText }
-  } catch (error) {
-    return handleErrorResponse(error)
-  }
-};
-
-export const requestToCancelExpiration = async ( dataToDelete ) => {
-  try {
-    const { data, status, statusText } = await axios.delete('/pinang/application/expire/cancel', { headers: { Authorization: localStorage.getItem('accessToken') }, data: {data : dataToDelete}});
-    
+    const { data, status, statusText } = await axios.post(`http://localhost:8000/Nasabah`,{ rekening, name,phoneNumber,alamat,KodeCabang});
+  
     return { data, status, statusText }
   } catch (error) {
     return handleErrorResponse(error)

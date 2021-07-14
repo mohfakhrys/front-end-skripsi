@@ -106,7 +106,7 @@ export default class Routes extends Component {
         <Route
           component={CRDetail}
           exact
-          path="/Tiket/CR/Detail"
+          path="/change/id_change=:id_change"
         />
        
       </Switch>

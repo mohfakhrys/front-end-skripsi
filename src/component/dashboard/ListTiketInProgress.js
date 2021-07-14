@@ -55,7 +55,7 @@ class TiketInProgress extends Component{
                                   {/* </div> */}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.user_name}
+                                  {tiket.full_name}
                                 </TableCell>
                                 <TableCell >
                                   {tiket.pekerja}
@@ -64,7 +64,7 @@ class TiketInProgress extends Component{
                                   {tiket.status}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.katagori}
+                                  {tiket.categoty_name}
                                 </TableCell>
                                 <TableCell >
                                   {tiket.komplain}

@@ -1,14 +1,11 @@
 import React,{Component} from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../images/logo_bri.png';
-import Footer from '../component/Footer'
+import Footer from '../component/Footer';
+import Navbar from '../component/Navbar';
+import SideBar from '../component/SideBar';
 import { SnackbarContent } from '@material-ui/core';
 
 import {
-  Button,
-  CircularProgress,
   TextField,
-  Typography,
   Snackbar
 } from '@material-ui/core';
 
@@ -16,9 +13,7 @@ import {
 import validate from 'validate.js';
 import _ from 'underscore';
 import schema from '../component/schema';
-import jwt from 'jsonwebtoken';
-import { SignUpData } from '../services/apps/pinang/signUp';
-import { asyncLocalStorage } from '../helpers';
+import { addNasabah } from '../services/apps/pinang/approval';
 
 class RegisterNasabah extends Component{
   constructor(props){
@@ -26,39 +21,33 @@ class RegisterNasabah extends Component{
       this.state = {
         values: {
             username: '',
-            password: '',
+            nomerHp: '',
             rekening: '',
-            email: '',
-            fullname:'',
-            userRole: ''
+            alamat: '',
+            kodeCabang:'',
           },
           touched: {
             username: false,
-            password: false,
+            nomerHp: false,
             rekening: false,
-            email: false,
-            fullname: false
+            alamat: false,
+            kodeCabang: false
           },
           errors: {
             username: null,
-            password: null,
+            nomerHp: null,
             rekening: null,
-            email: null,
-            fullname: null
+            alamat: null,
+            kodeCabang: null
           },
           isValid: false,
           isLoading: false,
           submitError: null,
-          showPassword: false,
+          shownomerHp: false,
           setOpenSnackbarLogin: false,
           snackBarMessage: '',
       }
   }
-
-
-  // componentDidMount(){
-  //   if (localStorage.getItem('accessToken')) this.props.history.push('/dashboard')
-  // }
 
 
   handleBack = () => {
@@ -89,16 +78,15 @@ class RegisterNasabah extends Component{
     this.setState(newState, this.validateForm);
   };
 
-  handleSignIn = async (event) => {
+  handleAddNasabah = async (event) => {
     event.preventDefault();
     
     const { history } = this.props;
     const { values } = this.state
 
     this.setState({ isLoading: true });
-
     console.log(this.state.values.userRole)
-    const { data, status, statusText } = await SignUpData(values.username,  values.fullname ,values.rekening, values.email, values.password, values.userRole)
+    const { data, status, statusText } = await addNasabah(values.rekening,  values.username ,values.nomerHp, values.alamat, values.kodeCabang)
 
     let setOpenSnackbarLogin = false
 
@@ -110,9 +98,9 @@ class RegisterNasabah extends Component{
       var snackBarMessage = statusText
 
       values.username = ''
-      values.password = ''
-      values.email = ''
-      values.fullname = ''
+      values.nomerHp = ''
+      values.alamat = ''
+      values.kodeCabang = ''
       values.rekening = ''
       values.userRole = ''
 
@@ -123,23 +111,10 @@ class RegisterNasabah extends Component{
       const { credentials } = data
 
       if(credentials && credentials ) {
-        const decoded = jwt.decode(credentials);
-        
-        // const roles = decoded.resource_access && decoded.resource_access['portal-web'] && decoded.resource_access['portal-web'].roles ? decoded.resource_access['portal-web'].roles : []
-        // const { payload } = decoded
+ 
 
-        // await asyncLocalStorage.setItem('accessToken', access_token)
-        // await asyncLocalStorage.setItem('refreshToken', refresh_token)
-        await asyncLocalStorage.setItem('nama', decoded.username)
-        await asyncLocalStorage.setItem('role', decoded.role)
-        // await asyncLocalStorage.setItem('roles', roles)
-        // if(payload) await asyncLocalStorage.setItem('name', decoded.username)
-        // if(payload) await asyncLocalStorage.setItem('role', decoded.role)
-        // if(payload) await asyncLocalStorage.setItem('role', payload.role)
-        // if(preferred_username) await asyncLocalStorage.setItem('username', preferred_username)
-
-        snackBarMessage = 'Register success!'
-        history.push('/dashboard')
+        snackBarMessage = 'Upload success!'
+        history.push('/Tiket')
       } else {
         snackBarMessage = 'Invalid token. Please try again'
       } 
@@ -166,27 +141,23 @@ class RegisterNasabah extends Component{
   render(){
     const {
       values,
-      touched,
-      errors,
-      isValid,
-      submitError,
-      isLoading,
-      showPassword,
+    //   touched,
+    //   errors,
     } = this.state;
     console.log(values.userRole)
-
-    const showEmailError = touched.username && errors.username;
-    const showPasswordError = touched.password && errors.password;
     
         return(
-          <div className="background" style={{height:'100%',width:'100%' ,paddingTop:'30px',paddingBottom:'80px',backgroundColor:'white'}}>
-            <div className="card" style={{width: '236px',height:'100%',margin:'0 auto',borderColor:'#004f97'}}>
+        <div>
+            <Navbar/>
+            <SideBar/>
+          <div className="background" style={{height:'100%',width:'100%' ,paddingTop:'100px',paddingBottom:'80px',backgroundColor:'white'}}>
+            <div className="card" style={{width: '400px',height:'100%',margin:'0 auto',borderColor:'#004f97'}}>
                 <div class="form-row">
                  <TextField
                       className="form-group"
                       label="Username"
                       name="username"
-                      style={{backgroundColor:'white'}}
+                      style={{backgroundColor:'white',width:'100%',marginTop:'10px',marginLeft:'10px',marginRight:'10px'}}
                       onChange={event =>
                         this.handleFieldChange('username', event.target.value)
                       }
@@ -194,7 +165,56 @@ class RegisterNasabah extends Component{
                       value={values.username}
                       variant="outlined"
                     />
+                    <TextField
+                      className="form-group"
+                      label="nomer hp"
+                      name="nomerHp"
+                      style={{backgroundColor:'white',marginTop:'10px',width:'100%',marginLeft:'10px',marginRight:'10px'}}
+                      onChange={event =>
+                        this.handleFieldChange('nomerHp', event.target.value)
+                      }
+                      type="number"
+                      value={values.nomerHp}
+                      variant="outlined"
+                    />
+                    <TextField
+                      className="form-group"
+                      label="rekening"
+                      name="rekening"
+                      style={{backgroundColor:'white',marginTop:'10px',width:'100%',marginLeft:'10px',marginRight:'10px'}}
+                      onChange={event =>
+                        this.handleFieldChange('rekening', event.target.value)
+                      }
+                      type="text"
+                      value={values.rekening}
+                      variant="outlined"
+                    />
+                    <TextField
+                      className="form-group"
+                      label="alamat"
+                      name="alamat"
+                      style={{backgroundColor:'white',marginTop:'10px',width:'100%',marginLeft:'10px',marginRight:'10px'}}
+                      onChange={event =>
+                        this.handleFieldChange('alamat', event.target.value)
+                      }
+                      type="text"
+                      value={values.alamat}
+                      variant="outlined"
+                    />
+                    <TextField
+                      className="form-group"
+                      label="kode cabang"
+                      name="kodeCabang"
+                      style={{backgroundColor:'white',marginTop:'10px',width:'100%',marginLeft:'10px',marginRight:'10px'}}
+                      onChange={event =>
+                        this.handleFieldChange('kodeCabang', event.target.value)
+                      }
+                      type="text"
+                      value={values.kodeCabang}
+                      variant="outlined"
+                    />
                 </div>
+                <button onClick={this.handleAddNasabah} style={{marginTop:'10px'}}>Tambah Nasabah</button>
             <div>
             <Snackbar
                       anchorOrigin={{
@@ -220,6 +240,8 @@ class RegisterNasabah extends Component{
             <Footer/>
           </div>
           </div>
+        </div>
+        
         );
     }
 }

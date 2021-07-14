@@ -31,6 +31,7 @@ class ListCR extends Component{
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Username Operasional</th>
+                        <th scope="col">Keterangan</th>
                         <th scope="col">Status</th>
                         <th scope="col">Tanggal Request</th>
                     </tr>
@@ -41,24 +42,27 @@ class ListCR extends Component{
                             tiket => (
                             <TableRow>
                                 <TableCell>
-                                        <Link to={`/Tiket/CR/Detail`}>
+                                        <Link to={`/change/id_change=${tiket.id_change}`}>
                                         {/* <Link to='/tiket/list'> */}
                                           <Typography
                                             variant="body1"
                                           >
-                                            {tiket.id_tiket_change_request}
+                                            {tiket.id_change}
                                           </Typography>
                                         </Link>
                                   {/* </div> */}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.user_operasional}
+                                  {tiket.user_name}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.status_change_request}
+                                  {tiket.keterangan}
                                 </TableCell>
                                 <TableCell >
-                                  {tiket.tanggal_request}
+                                  {tiket.status_change}
+                                </TableCell>
+                                <TableCell >
+                                  {tiket.created_at}
                                 </TableCell>
                               </TableRow>
                             

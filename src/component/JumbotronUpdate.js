@@ -62,14 +62,15 @@ handleInputChange(event) {
     let id_katagori
 
     if (katagori === 'Pembayaran Tagihan'){
-      return id_katagori = '1'
+      id_katagori = '1'
     } else if (katagori === 'Pencairan Dana'){
-      return id_katagori = '2'
+       id_katagori = '2'
     } else if (katagori === 'Pengajuan Pinjaman'){
-      return id_katagori = '3'
+       id_katagori = '3'
     }else {
-      return id_katagori = '4'
+       id_katagori = '4'
     }
+    return id_katagori
   }
 
   handleSubmit = event => {
@@ -78,6 +79,7 @@ handleInputChange(event) {
     // const katagori = this.state.values.pekerja
     const description = this.state.deskripsi
     const id_katagori = this.checkId()
+    console.log(id_katagori)
 
     const data = new FormData()
     data.append('image', this.state.selectedFile);
