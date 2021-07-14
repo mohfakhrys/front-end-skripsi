@@ -5,6 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 // Views
 import MainDashboard from './page/Dashboard';
 import SignIn from './component/Login';
+import RegisterNasabah from './component/RegisterNasabah';
 import TiketNew from './page/Tiket';
 import TiketDone from './page/TiketDone';
 import TiketPending from './page/TiketPending';
@@ -31,6 +32,11 @@ export default class Routes extends Component {
           exact
           from="/"
           to="/login"
+        />
+        <Route
+          component={RegisterNasabah}
+          exact
+          path="/nasabah"
         />
         <Route
           component={Register}

@@ -53,14 +53,17 @@ class DetailTiket extends Component{
           tiket:[],
           values: {
               pekerja: '',
-              status: ''
+              status: '',
+              user: ''
             },
             touched: {
               pekerja: false,
               status: false
             },
             submitError: null,
-            deskripsi:''
+            deskripsi:'',
+            photos:[],
+            isOpen: false
         }
     }
 
@@ -69,7 +72,18 @@ class DetailTiket extends Component{
         // Simple GET request using axios
         axios.get(`http://localhost:8000/tiket/list/id_tiket=${id}`)
             .then(response => this.setState({ tiket: response.data }));
+        
+        axios.get(`http://localhost:8080/ticket/image/${id}/thumbnail`)
+            .then(response => this.setState({ photos: response.data }));
+
+            console.log(this.state.photos)
     }
+
+    handleShowDialog = () => {
+      this.setState({ isOpen: !this.state.isOpen });
+      console.log('cliked');
+    };
+  
 
     handleAssign = async (event) => {
     event.preventDefault();
@@ -203,6 +217,7 @@ class DetailTiket extends Component{
 
     render(){
         const { tiket,values } = this.state;
+        const { role } = localStorage.getItem('role')
         let button;
             if (tiket.jawaban ===  null) {
                 button = 
@@ -218,17 +233,13 @@ class DetailTiket extends Component{
                 </div>
             </div>
             }
-
-        
-        console.log(tiket)
-        return(
-            <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
-            <h3 style={{marginLeft:'180px'}}>Detail Tiket</h3>
-            <div className="card" style={{width: '1165px',height:'120%',marginTop:'10px',marginLeft:'180px',borderColor:'#004f97'}}>
-                <div className ="id-tiket" style={{marginLeft:'5px',marginTop:'5px'}}>Tiket  {tiket.id_tiket} - {tiket.user_name} - {tiket.first_name} - {tiket.status} - {tiket.pekerja}
-                    <select class="form-select"  value={values.status} onChange={event =>
+        let assign;
+            if ( role === 'tim helpdesk' ){
+              assign = 
+              <div className ="assig-tiket"style={{marginTop:'5px'}}> 
+                <select class="form-select"  value={values.status} onChange={event =>
                         this.handleFieldChange('pekerja', event.target.value)
-                      } aria-label="Default select example" style={{marginLeft:'250px'}}>
+                      } aria-label="Default select example" style={{marginLeft:'5px'}}>
                   {options.map((option)=>(
                       <option value={option.value}>{option.label}</option>
                   ))
@@ -244,8 +255,45 @@ class DetailTiket extends Component{
                   }
                 </select>
                     <button style={{marginLeft:'5px'}} onClick={this.handleStatus}>Submit Status</button>
+              </div>
+              
+            }else {
+              assign = 
+              <div className ="assig-tiket" style={{marginTop:'5px'}}> 
+                <select class="form-select"  value={values.pekerja} onChange={event =>
+                        this.handleFieldChange('status', event.target.value)
+                      } aria-label="Default select example" style={{marginLeft:'5px'}}>
+                  {optionStatus.map((option)=>(
+                      <option value={option.value}>{option.label}</option>
+                  ))
+                  }
+                </select>
+                    <button style={{marginLeft:'5px'}} onClick={this.handleStatus}>Submit Status</button>
+              </div>
+            }
+        return(
+            <div className="background" style={{height:'565px',width:'100%' ,paddingTop:'70px',paddingBottom:'80px',backgroundColor:'white'}}>
+            <h3 style={{marginLeft:'180px'}}>Detail Tiket</h3>
+            <div className="card" style={{width: '1165px',height:'120%',marginTop:'10px',marginLeft:'180px',borderColor:'#004f97'}}>
+                <div className ="id-tiket" style={{marginLeft:'5px',marginTop:'5px'}}>Tiket  {tiket.id_tiket} - {tiket.name} - {tiket.rekening} - {tiket.nomer_hp}
+                    <button style={{marginLeft:'5px'}} onClick={this.handleShowDialog}>Lihat Lampiran</button>
+                    {this.state.isOpen && (
+                      <dialog
+                        className="dialog"
+                        style={{ position: 'right' }}
+                        open
+                        onClick={this.handleShowDialog}
+                      > 
+                      <img
+                        className="image"
+                        src="/Anj.png"
+                        onClick={this.handleShowDialog}
+                        alt="no image"
+                      />
+                      </dialog>
+                    )}
                 </div>
-                
+            {assign}
             <div className="card" style={{width: '100%',height:'40%',marginTop:'10px',borderColor:'#004f97'}}>
                 <div>
                     {tiket.komplain}

@@ -79,9 +79,9 @@ class Register extends Component{
   }
 
 
-  componentDidMount(){
-    if (localStorage.getItem('accessToken')) this.props.history.push('/dashboard')
-  }
+  // componentDidMount(){
+  //   if (localStorage.getItem('accessToken')) this.props.history.push('/dashboard')
+  // }
 
 
   handleBack = () => {
@@ -121,7 +121,7 @@ class Register extends Component{
     this.setState({ isLoading: true });
 
     console.log(this.state.values.userRole)
-    const { data, status, statusText } = await SignUpData(values.username, values.rekening, values.fullname , values.email, values.password, values.userRole)
+    const { data, status, statusText } = await SignUpData(values.username,  values.fullname ,values.rekening, values.email, values.password, values.userRole)
 
     let setOpenSnackbarLogin = false
 
@@ -161,7 +161,7 @@ class Register extends Component{
         // if(payload) await asyncLocalStorage.setItem('role', payload.role)
         // if(preferred_username) await asyncLocalStorage.setItem('username', preferred_username)
 
-        snackBarMessage = 'Login success!'
+        snackBarMessage = 'Register success!'
         history.push('/dashboard')
       } else {
         snackBarMessage = 'Invalid token. Please try again'

@@ -8,9 +8,9 @@ axios.defaults.baseURL = baseApiUrl
 /**
  * @description post sign up
  */
-export const SignUpData = async (userName, firstName, lastName, email, password, userRoles) => {
+export const SignUpData = async (userName, fullName, rekening, email, password, userRoles) => {
   try {
-    const { data, status, statusText } = await axios.post('/users/register', { userName, firstName, lastName, email, password, userRoles });
+    const { data, status, statusText } = await axios.post('/users/register', { userName, fullName, rekening, email, password, userRoles });
     
     return { data, status, statusText }
   } catch (error) {

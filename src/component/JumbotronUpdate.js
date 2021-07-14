@@ -37,25 +37,55 @@ class JumbotronUpdate extends Component{
         },
         submitError: null,
         name: '',
-        deskripsi: '', 
+        deskripsi: '',
+        selectedFile: '',
     }
+    this.handleInputChange = this.handleInputChange.bind(this);
 }
 
-  componentDidMount() {
-    const id = localStorage.getItem('nama')
-    // Simple GET request using axios
-    axios.get(`http://localhost:8000/user/username=${id}`)
-        .then(response => this.setState({ tiket: response.data }));
+handleInputChange(event) {
+  this.setState({
+      selectedFile: event.target.files[0],
+    })
+    console.log(this.state.selectedFile)
+}
+
+  // componentDidMount() {
+  //   const id = localStorage.getItem('nama')
+  //   // Simple GET request using axios
+  //   axios.get(`http://localhost:8000/user/username=${id}`)
+  //       .then(response => this.setState({ tiket: response.data }));
+  // }
+
+  checkId (){
+    const katagori = this.state.values.pekerja
+    let id_katagori
+
+    if (katagori === 'Pembayaran Tagihan'){
+      return id_katagori = '1'
+    } else if (katagori === 'Pencairan Dana'){
+      return id_katagori = '2'
+    } else if (katagori === 'Pengajuan Pinjaman'){
+      return id_katagori = '3'
+    }else {
+      return id_katagori = '4'
+    }
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    const id =  this.state.tiket.id
-    const katagori = this.state.values.pekerja
-    
+    const id =  localStorage.getItem('id')
+    // const katagori = this.state.values.pekerja
     const description = this.state.deskripsi
-    
-    axios.post('http://localhost:8000/komplain', { id ,description,katagori })
+    const id_katagori = this.checkId()
+
+    const data = new FormData()
+    data.append('image', this.state.selectedFile);
+    data.append('idNasabah',id);
+    data.append('complain',description);
+    data.append('idKategoty',id_katagori);
+  
+    axios.post('http://localhost:8080/ticket/create/by-nasabah',  data )
       .then(res=>{
         console.log(res);
         console.log(res.data);
@@ -86,8 +116,10 @@ class JumbotronUpdate extends Component{
   };
 
     render(){
-      const { tiket,values } = this.state
-      console.log(values.pekerja)
+      const { values } = this.state
+      const  user  = localStorage.getItem('fullname')
+      const rekening = localStorage.getItem('rekening')
+      // console.log(values.pekerja)
         return(
             <div className="background" style={{height:'100%',width:'100%',paddingTop:'110px',paddingBottom:'80px',backgroundColor:'white'}}>
             <div className="card" style={{width: '90%',height:'100%',margin:'0 auto',borderColor:'#004f97'}}>
@@ -95,7 +127,7 @@ class JumbotronUpdate extends Component{
               <form >
               <div class="mb-3">
                 <h3 for="text" className="form-label" style={{color:'white'}}>Username</h3>
-                <h5 className="username" style={{color:'white'}}>{tiket.user_name} - {tiket.first_name}</h5>
+                <h5 className="username" style={{color:'white'}}>{user} - {rekening}</h5>
                 <select class="form-select"  value={values.pekerja} onChange={event =>
                         this.handleFieldChange('pekerja', event.target.value)
                       } aria-label="Default select example" >
@@ -104,11 +136,14 @@ class JumbotronUpdate extends Component{
                   ))
                   }
                 </select>
-                <div>
+                <div >
                   <h3 for="text" className="form-label" style={{color:'white',marginTop:'5px'}}>Deskripsi</h3>
                 </div>
                 <textarea className="form-control input-lg" rows="5" id="desc" aria-describedby="password" type = "text" name = "deskripsi" onChange= {this.handleChangeDeskripsi}/>
-                    <button className = 'upload-image'style={{color:'black',marginTop:'10px'}}>Upload Lampiran</button>
+                    <div className="form-group" >
+                    <label className="text-white" style={{marginTop:'10px'}}>Upload Lampiran :</label>
+                      <input className = 'upload-image' type="file" style={{color:'black',marginTop:'10px',marginLeft:'10px'}} onChange={this.handleInputChange}/>
+                    </div>
                 <div>
                   <button onClick = { this.handleSubmit } type="button" className="btn btn-primary" style={{marginTop:'10px',backgroundColor:'white',color:'#004f97'}}>Submit</button>
                 </div>
